@@ -8,15 +8,25 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"os"
 )
 
 func main() {
-	runOpt := os.Args[2]
+	runOpt := "file"
+	fileName := ""
+	if len(os.Args) > 2{
+		runOpt = os.Args[1]
+		fileName = os.Args[2]
+	}
 	InitAbbreviationMap()
 	InitTonganWordMap()
 	InitEnglishWordMap()
 	if runOpt == "file" {
-		fmt.Println("reading File")
+		bytes, err := ioutil.ReadFile(fileName)
+		if err != nil {
+			fmt.Println("Bad file read")
+		}
+		parsePage(string(bytes))
 	} else {
 	http.HandleFunc("/parse", func(w http.ResponseWriter, req *http.Request) {
 		body, _ := ioutil.ReadAll(req.Body)

@@ -1,1 +1,4 @@
+run inside docker
 sudo docker build -t dictionary-parser .; sudo docker run -it --publish 8080:8080 --rm --name dictionary-page-parser dictionary-parser
+to run locally 
+go install . && ~/go/bin/DictionaryParser file
